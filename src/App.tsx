@@ -2,7 +2,7 @@ import { ThemeProvider } from "styled-components"
 import { GlobalStyles } from "./styles/global"
 import { theme } from "./styles/theme"
 import Header from "./components/Header"
-import Map from './assets/usa-map.svg?react'
+import Map from "./components/Map"
 
 function App() {
 
