@@ -3,6 +3,7 @@ import { GlobalStyles } from "./styles/global"
 import { theme } from "./styles/theme"
 import Header from "./components/Header"
 import Map from "./components/Map"
+import InputAndList from "./components/InputAndList"
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
       <GlobalStyles />
       <Header />
       <Map />
+      <InputAndList />
     </ThemeProvider>
   )
 }
