@@ -5,6 +5,7 @@ export default function List() {
   const { 
     guessedStates, 
     remainingStates,
+    newListItemIsHighlighted,
     switchGuessedStateHighlight
   } = useGuessGame();
 
@@ -15,11 +16,16 @@ export default function List() {
         <span>{remainingStates} states remaining</span>
       </S_ListHeader>
       <S_List reversed>
-        {[...guessedStates].reverse().map((state) => (
+        {[...guessedStates].reverse().map((state, i) => (
           <S_ListItem 
             key={state.id}
+            $isHighlighted={i === 0 && newListItemIsHighlighted}
             onMouseEnter={() => switchGuessedStateHighlight(state, true)}
             onMouseLeave={() => switchGuessedStateHighlight(state, false)}
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ ease: "easeInOut", duration: 0.3}}
+            layout
           >
             {state.name}
           </S_ListItem>

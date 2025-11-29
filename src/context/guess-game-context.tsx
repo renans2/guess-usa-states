@@ -9,6 +9,7 @@ type GuessGameContextType = {
   checkInput: (input: string) => void;
   remainingStates: number;
   guessedStates: State[];
+  newListItemIsHighlighted: boolean;
   svgRef: React.RefObject<SVGElement | null>;
   switchGuessedStateHighlight: (state: State, highlight: boolean) => void;
 }
@@ -19,6 +20,7 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
   const [input, setInput] = useState("");
   const [remainingStates, setRemainingStates] = useState(USA_STATES_DATA.length);
   const [guessedStates, setGuessedStates] = useState<State[]>([]);
+  const [newListItemIsHighlighted, setNewListItemIsHighlighted] = useState(false);
   const svgRef = useRef<SVGElement>(null);
   const theme = useTheme();
 
@@ -34,12 +36,8 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
 
     setGuessedStates((prev) => [...prev, matchedState]);
     setRemainingStates((prev) => prev - 1);
+    highlightNewGuessedItem(matchedState);
     setInput("");
-
-    if (!svgRef.current) return;
-
-    const path = svgRef.current.querySelector(`#${matchedState.id}`) as HTMLElement;
-    path.style.fill = theme.colors.green;
   };
 
   const switchGuessedStateHighlight = (state: State, highlight: boolean) => {
@@ -48,6 +46,17 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
     const path = svgRef.current.querySelector(`#${state.id}`) as HTMLElement;
     path.style.fill = theme.colors[highlight ? "greenAccent" : "green"];
   }
+
+  const highlightNewGuessedItem = (state: State) => {
+    setNewListItemIsHighlighted(true);
+    setTimeout(() => setNewListItemIsHighlighted(false), 2000);
+
+    if (!svgRef.current) return;
+
+    const path = svgRef.current.querySelector(`#${state.id}`) as HTMLElement;
+    path.style.fill = theme.colors.greenAccent;
+    setTimeout(() => path.style.fill = theme.colors.green, 2000);
+  }
   
   return (
     <GuessGameContext value={{
@@ -55,6 +64,7 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
       checkInput,
       guessedStates,
       remainingStates,
+      newListItemIsHighlighted,
       svgRef,
       switchGuessedStateHighlight,
     }}>

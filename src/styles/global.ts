@@ -26,4 +26,8 @@ export const GlobalStyles = createGlobalStyle`
     cursor: not-allowed;
     opacity: 0.5;
   }
+
+  path {
+    transition: fill 200ms;
+  }
 `;

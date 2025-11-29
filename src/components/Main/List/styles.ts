@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { S_Surface } from "../../../ui/surface";
+import { motion } from "motion/react";
 
 export const S_ListContainer = styled(S_Surface)`
   width: 100%;
@@ -26,9 +27,18 @@ export const S_List = styled.ol`
   overflow-y: auto;
 `;
 
-export const S_ListItem = styled.li`
+export const S_ListItem = styled(motion.li)<{
+  $isHighlighted: boolean;
+}>`
   font-size: 1.4rem;
-  padding: 4px;
+  padding: 4px 8px;
+  transition: background-color 500ms, padding-left 200ms;
+  background-color: ${({ $isHighlighted, theme }) => 
+    $isHighlighted ? theme.colors.greenAccent : "inherit"};
+
+  &:first-child {
+    border-radius: 8px 8px 0 0;
+  }
 
   &:not(:last-child) {
     border-bottom: 1px solid #DBDBDB;
@@ -36,5 +46,6 @@ export const S_ListItem = styled.li`
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.surfaceHover};
+    padding-left: 20px;
   }
 `;
