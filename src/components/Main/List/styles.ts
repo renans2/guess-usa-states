@@ -22,11 +22,19 @@ export const S_List = styled.ol`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 5px;
   flex: 1;
   overflow-y: auto;
 `;
 
 export const S_ListItem = styled.li`
   font-size: 1.4rem;
+  padding: 4px;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #DBDBDB;
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.surfaceHover};
+  }
 `;

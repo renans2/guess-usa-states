@@ -8,7 +8,7 @@ export default function Input() {
     <S_Input 
       value={input} 
       onChange={(e) => checkInput(e.target.value)}
-      placeholder="type here..."
+      placeholder="guess here..."
     />
   );
 }

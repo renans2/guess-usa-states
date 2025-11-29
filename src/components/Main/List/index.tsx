@@ -2,7 +2,11 @@ import { useGuessGame } from "../../../context/guess-game-context";
 import { S_List, S_ListContainer, S_ListHeader, S_ListItem } from "./styles";
 
 export default function List() {
-  const { guessedStates, remainingStates } = useGuessGame();
+  const { 
+    guessedStates, 
+    remainingStates,
+    switchGuessedStateHighlight
+  } = useGuessGame();
 
   return (
     <S_ListContainer>
@@ -12,7 +16,11 @@ export default function List() {
       </S_ListHeader>
       <S_List reversed>
         {[...guessedStates].reverse().map((state) => (
-          <S_ListItem key={state.id}>
+          <S_ListItem 
+            key={state.id}
+            onMouseEnter={() => switchGuessedStateHighlight(state, true)}
+            onMouseLeave={() => switchGuessedStateHighlight(state, false)}
+          >
             {state.name}
           </S_ListItem>
         ))}

@@ -6,6 +6,10 @@ export const S_Input = styled(S_Surface).attrs({ as: "input"})`
   padding: 10px 14px;
   font-size: 1.5rem;
 
+  &:focus {
+    outline: 3px solid gray;
+  }
+
   &::placeholder {
     color: ${({ theme }) => theme.colors.fontPlaceholder};
   }

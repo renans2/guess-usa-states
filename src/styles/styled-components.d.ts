@@ -8,8 +8,11 @@ declare module "styled-components" {
     colors: {
       background: string,
       surface: string,
+      surfaceHover: string,
       font: string,
       fontPlaceholder: string,
+      green: string,
+      greenAccent: string,
     }
   }
 }

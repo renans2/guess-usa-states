@@ -7,7 +7,10 @@ export const theme: DefaultTheme = {
   colors: {
     background: "#FFFFFF",
     surface: "#F9F9F9",
+    surfaceHover: "#EAEAEA",
     font: "#7E7E7E",
-    fontPlaceholder: "#DEDEDE",
+    fontPlaceholder: "#BEBEBE",
+    green: "#CDFFD8",
+    greenAccent: "#82FF9D"
   }
 }
