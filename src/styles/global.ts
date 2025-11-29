@@ -12,8 +12,10 @@ export const GlobalStyles = createGlobalStyle`
     width: 100vw;
     height: 100vh;
     background-color: ${({ theme }) => theme.colors.background};
+    display: grid;
+    grid-template-rows: 70px 1fr;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   button:not(:disabled) {

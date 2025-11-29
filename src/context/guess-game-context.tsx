@@ -20,16 +20,17 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
   const checkInput = (newInput: string) => {
     setInput(newInput);
     
-    const matchedState = USA_STATES_DATA.find((state) => matchesState(state, input));
-
+    const matchedState = USA_STATES_DATA.find((state) => matchesState(state, newInput));
+    
     if (!matchedState) return;
 
-    const isAlreadyGuessed = guessedStates.find((state) => matchesState(state, input));
+    const isAlreadyGuessed = guessedStates.find((state) => matchesState(state, newInput));
 
     if (isAlreadyGuessed) return;
 
     setGuessedStates((prev) => [...prev, matchedState]);
     setRemainingStates((prev) => prev - 1);
+    setInput("");
   };
   
   return (
