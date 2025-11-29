@@ -2,6 +2,7 @@ import { ThemeProvider } from "styled-components"
 import { GlobalStyles } from "./styles/global"
 import { theme } from "./styles/theme"
 import Header from "./components/Header"
+import Map from './assets/usa-map.svg?react'
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Header />
+      <Map />
     </ThemeProvider>
   )
 }
