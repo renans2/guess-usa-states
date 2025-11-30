@@ -86,7 +86,16 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
     if (!svgRef.current || guessedStates.length !== USA_STATES_DATA.length) return;
 
     const paths = svgRef.current.querySelectorAll<HTMLElement>(".state");
-    paths.forEach((path) => path.classList.add("highlightAccent"));
+    paths.forEach((path) => {
+      path.classList.add("highlightAccent");
+      path.addEventListener("mouseenter", () => {
+        paths.forEach((path) => path.classList.remove("highlightAccent"));
+        path.classList.add("highlightAccent");
+      });
+      path.addEventListener("mouseleave", () => {
+        paths.forEach((path) => path.classList.add("highlightAccent"));
+      });
+    });
   }, [guessedStates]);
   
   return (

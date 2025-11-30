@@ -27,6 +27,10 @@ export const GlobalStyles = createGlobalStyle`
     opacity: 0.5;
   }
 
+  svg {
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
+  }
+
   path {
     transition: fill 200ms;
 
