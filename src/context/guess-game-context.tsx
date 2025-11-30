@@ -9,7 +9,6 @@ import Tooltip from "../components/Tooltip";
 type GuessGameContextType = {
   input: string;
   checkInput: (input: string) => void;
-  remainingStates: number;
   guessedStates: State[];
   newListItemIsHighlighted: boolean;
   svgRef: React.RefObject<SVGElement | null>;
@@ -20,7 +19,6 @@ const GuessGameContext = createContext<GuessGameContextType | undefined>(undefin
 
 export default function GuessGameProvider({ children }: { children: React.ReactNode }) {
   const [input, setInput] = useState("");
-  const [remainingStates, setRemainingStates] = useState(USA_STATES_DATA.length);
   const [guessedStates, setGuessedStates] = useState<State[]>([]);
   const [newListItemIsHighlighted, setNewListItemIsHighlighted] = useState(false);
   const svgRef = useRef<SVGElement>(null);
@@ -38,7 +36,6 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
     if (isAlreadyGuessed) return;
 
     setGuessedStates((prev) => [...prev, matchedState]);
-    setRemainingStates((prev) => prev - 1);
     highlightNewGuessedItem(matchedState, guessedStates.length + 1);
     setInput("");
   };
@@ -69,7 +66,6 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
       input,
       checkInput,
       guessedStates,
-      remainingStates,
       newListItemIsHighlighted,
       svgRef,
       switchGuessedStateHighlight,

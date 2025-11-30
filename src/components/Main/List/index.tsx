@@ -1,13 +1,15 @@
+import { USA_STATES_DATA } from "../../../constants/usa-map-data";
 import { useGuessGame } from "../../../context/guess-game-context";
 import { S_List, S_ListContainer, S_ListHeader, S_ListItem } from "./styles";
 
 export default function List() {
   const { 
     guessedStates, 
-    remainingStates,
     newListItemIsHighlighted,
     switchGuessedStateHighlight
   } = useGuessGame();
+
+  const remainingStates = USA_STATES_DATA.length - guessedStates.length
 
   return (
     <S_ListContainer>
