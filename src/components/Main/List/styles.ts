@@ -8,7 +8,7 @@ export const S_ListContainer = styled(S_Surface)`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: 0;
+  min-height: 100px;
   flex: 1;
 `;
 
@@ -18,7 +18,7 @@ export const S_ListHeader = styled.div`
   justify-content: space-between;
 `;
 
-export const S_List = styled.ol`
+export const S_List = styled.ul`
   list-style-position: inside;
   width: 100%;
   display: flex;
@@ -30,11 +30,14 @@ export const S_List = styled.ol`
 export const S_ListItem = styled(motion.li)<{
   $isHighlighted: boolean;
 }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 1.4rem;
   padding: 4px 8px;
   transition: background-color 500ms, padding-left 200ms;
   background-color: ${({ $isHighlighted, theme }) => 
-    $isHighlighted ? theme.colors.greenAccent : "inherit"};
+    $isHighlighted ? theme.colors.green : "inherit"};
 
   &:first-child {
     border-radius: 8px 8px 0 0;
@@ -48,4 +51,14 @@ export const S_ListItem = styled(motion.li)<{
     background-color: ${({ theme }) => theme.colors.surfaceHover};
     padding-left: 20px;
   }
+
+  img {
+    height: 32px;
+  }
+`;
+
+export const S_NoStatesGuessed = styled.span`
+  text-align: center;
+  color: ${({ theme }) => theme.colors.fontPlaceholder};
+  font-style: italic;
 `;

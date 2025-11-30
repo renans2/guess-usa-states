@@ -10,5 +10,6 @@ export const S_WinnerMessageContainer = styled(S_Surface)`
 
   h2 {
     font-size: 1.5em;
+    text-align: center;
   }
 `;
