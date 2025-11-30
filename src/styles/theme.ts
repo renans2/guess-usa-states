@@ -10,7 +10,7 @@ export const theme: DefaultTheme = {
     surfaceHover: "#EAEAEA",
     font: "#7E7E7E",
     fontPlaceholder: "#BEBEBE",
-    green: "#CDFFD8",
-    greenAccent: "#82FF9D"
+    green: "#B3FFC3",
+    greenAccent: "#31FF5E"
   }
 }

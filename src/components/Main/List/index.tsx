@@ -6,7 +6,8 @@ export default function List() {
   const { 
     guessedStates, 
     newListItemIsHighlighted,
-    switchGuessedStateHighlight
+    highlightGuessedState,
+    downplayGuessedState,
   } = useGuessGame();
 
   const remainingStates = USA_STATES_DATA.length - guessedStates.length
@@ -22,8 +23,8 @@ export default function List() {
           <S_ListItem 
             key={state.id}
             $isHighlighted={i === 0 && newListItemIsHighlighted}
-            onMouseEnter={() => switchGuessedStateHighlight(state, true)}
-            onMouseLeave={() => switchGuessedStateHighlight(state, false)}
+            onMouseEnter={() => highlightGuessedState(state)}
+            onMouseLeave={() => downplayGuessedState(state)}
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ ease: "easeInOut", duration: 0.3}}
