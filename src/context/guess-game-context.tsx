@@ -2,7 +2,6 @@ import React, { createContext, useContext, useEffect, useRef, useState } from "r
 import type { State } from "../types/State";
 import { USA_STATES_DATA } from "../constants/usa-map-data";
 import { matchesState } from "../utils/matchesState";
-import { useTheme } from "styled-components";
 import useGuessedStatesTooltip from "../hooks/useGuessedStatesTooltip";
 import Tooltip from "../components/Tooltip";
 
@@ -23,7 +22,6 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
   const [guessedStates, setGuessedStates] = useState<State[]>([]);
   const [newListItemIsHighlighted, setNewListItemIsHighlighted] = useState(false);
   const svgRef = useRef<SVGElement>(null);
-  const theme = useTheme();
   const { tooltipObj, registerGuessedState } = useGuessedStatesTooltip();
 
   const checkInput = (newInput: string) => {
@@ -48,11 +46,10 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
     
     if (guessedStates.length === USA_STATES_DATA.length) {
       const paths = svgRef.current.querySelectorAll<HTMLElement>(".state");
-      paths.forEach((path) => path.style.fill = theme.colors.green);
-      path.style.fill = theme.colors.greenAccent;
-    } else {
-      path.style.fill = theme.colors.greenAccent;
+      paths.forEach((path) => path.classList.remove("highlightAccent"));
     }
+
+    path.classList.add("highlightAccent");
   }
 
   const downplayGuessedState = (state: State) => {
@@ -62,9 +59,9 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
 
     if (guessedStates.length === USA_STATES_DATA.length) {
       const paths = svgRef.current.querySelectorAll<HTMLElement>(".state");
-      paths.forEach((path) => path.style.fill = theme.colors.greenAccent);
+      paths.forEach((path) => path.classList.add("highlightAccent"));
     } else {
-      path.style.fill = theme.colors.green;
+      path.classList.remove("highlightAccent");
     }
   }
 
@@ -75,17 +72,21 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
     if (!svgRef.current) return;
 
     const path = svgRef.current.querySelector(`#${state.id}`) as HTMLElement;
+    path.classList.add("highlight", "highlightAccent");
+
+    if(guessedStates.length + 1 !== USA_STATES_DATA.length) {
+      setTimeout(() => path.classList.remove("highlightAccent"), 2000);
+    }
+
     const text = `${position}. ${state.name}`;
     registerGuessedState(text, path);
-    path.style.fill = theme.colors.greenAccent;
-    setTimeout(() => path.style.fill = theme.colors.green, 2000);
   }
 
   useEffect(() => {
     if (!svgRef.current || guessedStates.length !== USA_STATES_DATA.length) return;
 
     const paths = svgRef.current.querySelectorAll<HTMLElement>(".state");
-    paths.forEach((path) => path.style.fill = theme.colors.greenAccent);
+    paths.forEach((path) => path.classList.add("highlightAccent"));
   }, [guessedStates]);
   
   return (

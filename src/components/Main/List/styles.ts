@@ -35,7 +35,7 @@ export const S_ListItem = styled(motion.li)<{
   align-items: center;
   font-size: 1.4rem;
   padding: 4px 8px;
-  transition: background-color 500ms, padding-left 200ms;
+  transition: background-color 500ms, padding-inline 200ms;
   background-color: ${({ $isHighlighted, theme }) => 
     $isHighlighted ? theme.colors.green : "inherit"};
 
@@ -49,11 +49,12 @@ export const S_ListItem = styled(motion.li)<{
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.surfaceHover};
-    padding-left: 20px;
+    padding-inline: 20px;
   }
 
   img {
     height: 32px;
+    border-radius: 5px;
   }
 `;
 

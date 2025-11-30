@@ -29,5 +29,17 @@ export const GlobalStyles = createGlobalStyle`
 
   path {
     transition: fill 200ms;
-  }
+
+    &.highlight {
+      fill: ${({ theme }) => theme.colors.green} !important;
+
+      &:hover {
+        fill: ${({ theme }) => theme.colors.greenAccent} !important;
+      }
+    }
+
+    &.highlightAccent {
+      fill: ${({ theme }) => theme.colors.greenAccent} !important;
+    } 
+  } 
 `;
