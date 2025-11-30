@@ -11,6 +11,8 @@ export const theme: DefaultTheme = {
     font: "#7E7E7E",
     fontPlaceholder: "#BEBEBE",
     green: "#B3FFC3",
-    greenAccent: "#31FF5E"
+    greenAccent: "#31FF5E",
+    redPrimary: "#FF6C6C",
+    redSecondary: "#FFE6E6",
   }
 }

@@ -13,6 +13,7 @@ type GuessGameContextType = {
   svgRef: React.RefObject<SVGElement | null>;
   highlightGuessedState: (state: State) => void;
   downplayGuessedState: (state: State) => void;
+  alreadyGuessed: boolean;
 }
 
 const GuessGameContext = createContext<GuessGameContextType | undefined>(undefined);
@@ -23,16 +24,24 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
   const [newListItemIsHighlighted, setNewListItemIsHighlighted] = useState(false);
   const svgRef = useRef<SVGElement>(null);
   const { tooltipObj, registerGuessedState } = useGuessedStatesTooltip();
+  const [alreadyGuessed, setAlreadyGuessed] = useState(false);
 
   const checkInput = (newInput: string) => {
     setInput(newInput);
     const matchedState = USA_STATES_DATA.find((state) => matchesState(state, newInput));
 
-    if (!matchedState) return;
+    if (!matchedState) {
+      setAlreadyGuessed(false);  
+      return;
+    };
 
     const isAlreadyGuessed = guessedStates.find((state) => matchesState(state, newInput));
 
-    if (isAlreadyGuessed) return;
+    if (isAlreadyGuessed) {
+      setAlreadyGuessed(true);
+      return;
+    };
+    setAlreadyGuessed(false);
 
     setGuessedStates((prev) => [...prev, matchedState]);
     highlightNewGuessedItem(matchedState, guessedStates.length + 1);
@@ -106,7 +115,8 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
       newListItemIsHighlighted,
       svgRef,
       highlightGuessedState,
-      downplayGuessedState
+      downplayGuessedState,
+      alreadyGuessed
     }}>
       {children}
       <Tooltip tooltipObj={tooltipObj} />

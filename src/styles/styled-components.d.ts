@@ -13,6 +13,8 @@ declare module "styled-components" {
       fontPlaceholder: string,
       green: string,
       greenAccent: string,
+      redPrimary: string,
+      redSecondary: string,
     }
   }
 }
