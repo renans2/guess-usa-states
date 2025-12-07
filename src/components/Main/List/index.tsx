@@ -26,9 +26,9 @@ export default function List() {
               $isHighlighted={i === guessedStates.length - 1 && newListItemIsHighlighted}
               onMouseEnter={() => highlightGuessedState(state)}
               onMouseLeave={() => downplayGuessedState(state)}
-              initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ ease: "easeInOut", duration: 0.3}}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ ease: "easeInOut", duration: 0.2}}
               layout
             >
               <span>{i + 1}. {state.name}</span>

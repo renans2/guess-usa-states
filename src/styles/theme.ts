@@ -5,9 +5,9 @@ export const theme: DefaultTheme = {
   border: "1px solid #DBDBDB",
   borderRadius: "10px",
   colors: {
-    background: "#FFFFFF",
-    surface: "#F9F9F9",
-    surfaceHover: "#EAEAEA",
+    background: "#F9F9F9",
+    surface: "#FFFFFF",
+    surfaceHover: "#EFEFEF",
     font: "#7E7E7E",
     fontPlaceholder: "#BEBEBE",
     green: "#B3FFC3",

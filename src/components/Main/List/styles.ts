@@ -56,6 +56,7 @@ export const S_ListItem = styled(motion.li)<{
   img {
     height: 32px;
     border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
   }
 `;
 
