@@ -1,16 +1,18 @@
+import { HIGHLIGHT_ACCENT } from "../constants/css-classes";
+
 export function addEventListenerGuessedAllStates(mapSvg: SVGElement) {
   const paths = mapSvg.querySelectorAll<HTMLElement>(".state");
   
   function removeHightlightAccentAll() {
-    paths.forEach((path) => path.classList.remove("highlightAccent"));
+    paths.forEach((path) => path.classList.remove(HIGHLIGHT_ACCENT));
   }
 
   function addHightlightAccentAll() {
-    paths.forEach((path) => path.classList.add("highlightAccent"));
+    paths.forEach((path) => path.classList.add(HIGHLIGHT_ACCENT));
   }
 
   paths.forEach((path) => {
-    path.classList.add("highlightAccent");
+    path.classList.add(HIGHLIGHT_ACCENT);
     path.addEventListener("mouseenter", removeHightlightAccentAll);
     path.addEventListener("mouseleave", addHightlightAccentAll);
   });
