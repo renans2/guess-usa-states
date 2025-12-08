@@ -16,7 +16,7 @@ type GuessGameContextType = {
   checkInput: (input: string) => void;
   guessedStates: State[];
   newGuessIsHighlighted: boolean;
-  svgRef: React.RefObject<SVGElement | null>;
+  svgRef: React.RefObject<SVGSVGElement | null>;
   hoverGuessedStateListItem: (state: State) => void;
   unhoverGuessedStateListItem: (state: State) => void;
   alreadyGuessed: boolean;
@@ -30,7 +30,7 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
   const [input, setInput] = useState("");
   const [guessedStates, setGuessedStates] = useState<State[]>([]);
   const [newGuessIsHighlighted, setNewGuessIsHighlighted] = useState(false);
-  const svgRef = useRef<SVGElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const { tooltipObj, registerStateTooltip } = useGuessedStatesTooltip();
   const [alreadyGuessed, setAlreadyGuessed] = useState(false);
   const { stopwatch, startStopwatch, stopStopwatch } = useStopwatch();
