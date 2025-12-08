@@ -13,10 +13,15 @@ export const S_HeaderContainer = styled.header`
 
   h1, a {
     color: ${({ theme }) => theme.colors.font};
+    font-family: "Rye", serif;
+    font-weight: 400;
   }
 
   h1 {
     font-size: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 5px
   }
 
   a {
@@ -26,5 +31,9 @@ export const S_HeaderContainer = styled.header`
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  img {
+    height: 40px;
   }
 `;
