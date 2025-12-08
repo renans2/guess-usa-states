@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { Stopwatch } from "../types/Stopwatch";
 
 export default function useStopwatch() {
   const [rawSeconds, setRawSeconds] = useState(0);
@@ -25,12 +26,13 @@ export default function useStopwatch() {
     };
   }, []);
 
-  const minutes = Math.floor(rawSeconds / 60);
-  const seconds = rawSeconds % 60;
+  const stopwatch: Stopwatch = {
+    minutes: Math.floor(rawSeconds / 60),
+    seconds: rawSeconds % 60,
+  } 
 
   return {
-    minutes,
-    seconds,
+    stopwatch,
     startStopwatch,
     stopStopwatch,
   }
