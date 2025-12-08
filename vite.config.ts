@@ -12,4 +12,5 @@ export default defineConfig({
     }),
     svgr(),
   ],
+  base: "/guess-usa-states/",
 })
