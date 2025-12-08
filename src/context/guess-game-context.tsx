@@ -35,12 +35,6 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
   const [alreadyGuessed, setAlreadyGuessed] = useState(false);
   const { stopwatch, startStopwatch, stopStopwatch } = useStopwatch();
 
-  window.addEventListener("beforeunload", (event) => {
-    if (0 < guessedStates.length && guessedStates.length < 50) {
-      event.preventDefault();
-    }
-  });
-
   function guessedAllStates() {
     return guessedStates.length === USA_STATES_DATA.length;
   }

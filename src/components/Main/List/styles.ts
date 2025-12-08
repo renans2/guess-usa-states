@@ -10,6 +10,21 @@ export const S_ListContainer = styled(S_Surface)`
   gap: 10px;
   min-height: 100px;
   flex: 1;
+
+  & > button {
+    border-radius: ${({ theme }) => theme.borderRadius};
+    border: none;
+    color: white;
+    padding: 8px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    background-color: black;
+    transition: transform 100ms ease-in-out;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
 `;
 
 export const S_ListHeader = styled.div<{

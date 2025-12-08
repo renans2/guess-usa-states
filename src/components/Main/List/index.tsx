@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
-import { USA_STATES_DATA } from "../../../constants/usa-map-data";
 import { useGuessGame } from "../../../context/guess-game-context";
 import { S_List, S_ListContainer, S_ListHeader, S_ListItem, S_NoStatesGuessed } from "./styles";
+import { USA_STATES_DATA } from "../../../constants/usa-map-data";
 
 export default function List() {
   const listRef = useRef<HTMLUListElement>(null);
@@ -23,6 +23,9 @@ export default function List() {
 
   return (
     <S_ListContainer>
+      {remainingStates === 0 && (
+        <button onClick={() => window.location.reload()}>Play again!</button>
+      )}
       <S_ListHeader $activeStopwatch={activeStopwatch}>
         <h2>
           Time{" "}
