@@ -3,17 +3,23 @@ import type { State } from "../types/State";
 import { USA_STATES_DATA } from "../constants/usa-map-data";
 import { matchesState } from "../utils/matchesState";
 import useGuessedStatesTooltip from "../hooks/useGuessedStatesTooltip";
-import Tooltip from "../components/Tooltip";
+// import Tooltip from "../components/Main/Tooltip";
+import { addEventListenerGuessedAllStates } from "../utils/addEventListeners";
+import type { Tooltip } from "../types/Tooltip";
+import { HIGHLIGHT, HIGHLIGHT_ACCENT } from "../constants/css-classes";
+
+const NEW_GUESS_HIGHLIGHT_TIME = 2000;
 
 type GuessGameContextType = {
   input: string;
   checkInput: (input: string) => void;
   guessedStates: State[];
-  newListItemIsHighlighted: boolean;
+  newGuessIsHighlighted: boolean;
   svgRef: React.RefObject<SVGElement | null>;
-  highlightGuessedState: (state: State) => void;
-  downplayGuessedState: (state: State) => void;
+  hoverGuessedStateListItem: (state: State) => void;
+  unhoverGuessedStateListItem: (state: State) => void;
   alreadyGuessed: boolean;
+  tooltipObj: Tooltip;
 }
 
 const GuessGameContext = createContext<GuessGameContextType | undefined>(undefined);
@@ -21,10 +27,14 @@ const GuessGameContext = createContext<GuessGameContextType | undefined>(undefin
 export default function GuessGameProvider({ children }: { children: React.ReactNode }) {
   const [input, setInput] = useState("");
   const [guessedStates, setGuessedStates] = useState<State[]>([]);
-  const [newListItemIsHighlighted, setNewListItemIsHighlighted] = useState(false);
+  const [newGuessIsHighlighted, setNewGuessIsHighlighted] = useState(false);
   const svgRef = useRef<SVGElement>(null);
-  const { tooltipObj, registerGuessedState } = useGuessedStatesTooltip();
+  const { tooltipObj, registerStateTooltip } = useGuessedStatesTooltip();
   const [alreadyGuessed, setAlreadyGuessed] = useState(false);
+
+  function guessedAllStates() {
+    return guessedStates.length === USA_STATES_DATA.length;
+  }
 
   const checkInput = (newInput: string) => {
     setInput(newInput);
@@ -41,70 +51,55 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
       setAlreadyGuessed(true);
       return;
     };
-    setAlreadyGuessed(false);
 
-    setGuessedStates((prev) => [...prev, matchedState]);
-    highlightNewGuessedItem(matchedState, guessedStates.length + 1);
+    const statePath = svgRef.current!.querySelector(`#${matchedState.id}`) as HTMLElement;
     setInput("");
+    setAlreadyGuessed(false);
+    setGuessedStates((prev) => [...prev, matchedState]);
+    highlightNewGuess(statePath);
+
+    const position = guessedStates.length + 1;
+    const text = `${position}. ${matchedState.name}`;
+    registerStateTooltip(text, statePath);
   };
 
-  const highlightGuessedState = (state: State) => {
-    if (!svgRef.current) return;
+  const highlightNewGuess = (statePath: HTMLElement) => {
+    setNewGuessIsHighlighted(true);
+    setTimeout(() => setNewGuessIsHighlighted(false), NEW_GUESS_HIGHLIGHT_TIME);
 
-    const path = svgRef.current.querySelector(`#${state.id}`) as HTMLElement;
+    statePath.classList.add(HIGHLIGHT, HIGHLIGHT_ACCENT);
+
+    if (guessedStates.length + 1 !== USA_STATES_DATA.length) {
+      setTimeout(() => statePath.classList.remove(HIGHLIGHT_ACCENT), NEW_GUESS_HIGHLIGHT_TIME);
+    }
+  }
+
+  const hoverGuessedStateListItem = (state: State) => {
+    const statePath = svgRef.current!.querySelector(`#${state.id}`) as HTMLElement;
     
-    if (guessedStates.length === USA_STATES_DATA.length) {
-      const paths = svgRef.current.querySelectorAll<HTMLElement>(".state");
-      paths.forEach((path) => path.classList.remove("highlightAccent"));
+    if (guessedAllStates()) {
+      const paths = svgRef.current!.querySelectorAll<HTMLElement>(".state");
+      paths.forEach((path) => path.classList.remove(HIGHLIGHT_ACCENT));
     }
 
-    path.classList.add("highlightAccent");
+    statePath.classList.add(HIGHLIGHT_ACCENT);
   }
 
-  const downplayGuessedState = (state: State) => {
-    if (!svgRef.current) return;
+  const unhoverGuessedStateListItem = (state: State) => {
+    const statePath = svgRef.current!.querySelector(`#${state.id}`) as HTMLElement;
 
-    const path = svgRef.current.querySelector(`#${state.id}`) as HTMLElement;
-
-    if (guessedStates.length === USA_STATES_DATA.length) {
-      const paths = svgRef.current.querySelectorAll<HTMLElement>(".state");
-      paths.forEach((path) => path.classList.add("highlightAccent"));
+    if (guessedAllStates()) {
+      const paths = svgRef.current!.querySelectorAll<HTMLElement>(".state");
+      paths.forEach((path) => path.classList.add(HIGHLIGHT_ACCENT));
     } else {
-      path.classList.remove("highlightAccent");
+      statePath.classList.remove(HIGHLIGHT_ACCENT);
     }
-  }
-
-  const highlightNewGuessedItem = (state: State, position: number) => {
-    setNewListItemIsHighlighted(true);
-    setTimeout(() => setNewListItemIsHighlighted(false), 2000);
-
-    if (!svgRef.current) return;
-
-    const path = svgRef.current.querySelector(`#${state.id}`) as HTMLElement;
-    path.classList.add("highlight", "highlightAccent");
-
-    if(guessedStates.length + 1 !== USA_STATES_DATA.length) {
-      setTimeout(() => path.classList.remove("highlightAccent"), 2000);
-    }
-
-    const text = `${position}. ${state.name}`;
-    registerGuessedState(text, path);
   }
 
   useEffect(() => {
-    if (!svgRef.current || guessedStates.length !== USA_STATES_DATA.length) return;
-
-    const paths = svgRef.current.querySelectorAll<HTMLElement>(".state");
-    paths.forEach((path) => {
-      path.classList.add("highlightAccent");
-      path.addEventListener("mouseenter", () => {
-        paths.forEach((path) => path.classList.remove("highlightAccent"));
-        path.classList.add("highlightAccent");
-      });
-      path.addEventListener("mouseleave", () => {
-        paths.forEach((path) => path.classList.add("highlightAccent"));
-      });
-    });
+    if (!guessedAllStates()) return;
+    
+    addEventListenerGuessedAllStates(svgRef.current!);
   }, [guessedStates]);
   
   return (
@@ -112,14 +107,14 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
       input,
       checkInput,
       guessedStates,
-      newListItemIsHighlighted,
+      newGuessIsHighlighted,
       svgRef,
-      highlightGuessedState,
-      downplayGuessedState,
-      alreadyGuessed
+      hoverGuessedStateListItem,
+      unhoverGuessedStateListItem,
+      alreadyGuessed,
+      tooltipObj
     }}>
       {children}
-      <Tooltip tooltipObj={tooltipObj} />
     </GuessGameContext>
   );
 }
