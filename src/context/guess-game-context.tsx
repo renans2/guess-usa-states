@@ -3,7 +3,6 @@ import type { State } from "../types/State";
 import { USA_STATES_DATA } from "../constants/usa-map-data";
 import { matchesState } from "../utils/matchesState";
 import useGuessedStatesTooltip from "../hooks/useGuessedStatesTooltip";
-// import Tooltip from "../components/Main/Tooltip";
 import { addEventListenerGuessedAllStates } from "../utils/addEventListeners";
 import type { Tooltip } from "../types/Tooltip";
 import { HIGHLIGHT, HIGHLIGHT_ACCENT } from "../constants/css-classes";
