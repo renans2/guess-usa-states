@@ -31,6 +31,12 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
   const { tooltipObj, registerStateTooltip } = useGuessedStatesTooltip();
   const [alreadyGuessed, setAlreadyGuessed] = useState(false);
 
+  window.addEventListener("beforeunload", (event) => {
+    if (0 < guessedStates.length && guessedStates.length < 50) {
+      event.preventDefault();
+    }
+  });
+
   function guessedAllStates() {
     return guessedStates.length === USA_STATES_DATA.length;
   }
