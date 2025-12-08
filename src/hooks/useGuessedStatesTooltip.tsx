@@ -2,7 +2,12 @@ import { useState } from "react";
 import type { Tooltip } from "../types/Tooltip";
 
 export default function useGuessedStatesTooltip() {
-  const [tooltipObj, setTooltipObj] = useState<Tooltip>({ visible: false, x: 0, y: 0, text: "" });
+  const [tooltipObj, setTooltipObj] = useState<Tooltip>({ 
+    visible: false, 
+    x: 0, 
+    y: 0, 
+    text: "" 
+  });
   
   const handleMouseEnter = (e: MouseEvent, text: string) => {
     setTooltipObj({
@@ -25,7 +30,7 @@ export default function useGuessedStatesTooltip() {
     setTooltipObj((prev) => ({ ...prev, visible: false }));
   }
 
-  const registerGuessedState = (text: string, path: HTMLElement) => {
+  const registerStateTooltip = (text: string, path: HTMLElement) => {
     path.addEventListener("mouseenter", (e) => handleMouseEnter(e, text));
     path.addEventListener("mousemove", (e) => handleMouseMove(e));
     path.addEventListener("mouseleave", handleMouseLeave);
@@ -33,6 +38,6 @@ export default function useGuessedStatesTooltip() {
 
   return ({
     tooltipObj,
-    registerGuessedState,
+    registerStateTooltip,
   });
 }

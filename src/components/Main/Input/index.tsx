@@ -9,7 +9,7 @@ export default function Input() {
       <S_Input 
         value={input} 
         onChange={(e) => checkInput(e.target.value)}
-        placeholder="guess here..."
+        placeholder="start typing here..."
         $alreadyGuessed={alreadyGuessed}
       />
       {alreadyGuessed && (

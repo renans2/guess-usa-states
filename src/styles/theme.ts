@@ -14,5 +14,7 @@ export const theme: DefaultTheme = {
     greenAccent: "#31FF5E",
     redPrimary: "#FF6C6C",
     redSecondary: "#FFE6E6",
+    tooltipBackground: "#333333",
+    tooltipFont: "#FFFFFF",
   }
 }

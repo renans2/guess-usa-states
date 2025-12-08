@@ -5,9 +5,9 @@ import { S_List, S_ListContainer, S_ListHeader, S_ListItem, S_NoStatesGuessed } 
 export default function List() {
   const { 
     guessedStates, 
-    newListItemIsHighlighted,
-    highlightGuessedState,
-    downplayGuessedState,
+    newGuessIsHighlighted,
+    hoverGuessedStateListItem,
+    unhoverGuessedStateListItem,
   } = useGuessGame();
 
   const remainingStates = USA_STATES_DATA.length - guessedStates.length;
@@ -23,9 +23,9 @@ export default function List() {
           {[...guessedStates].map((state, i) => (
             <S_ListItem 
               key={state.id}
-              $isHighlighted={i === guessedStates.length - 1 && newListItemIsHighlighted}
-              onMouseEnter={() => highlightGuessedState(state)}
-              onMouseLeave={() => downplayGuessedState(state)}
+              $isHighlighted={i === guessedStates.length - 1 && newGuessIsHighlighted}
+              onMouseEnter={() => hoverGuessedStateListItem(state)}
+              onMouseLeave={() => unhoverGuessedStateListItem(state)}
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ ease: "easeInOut", duration: 0.2}}

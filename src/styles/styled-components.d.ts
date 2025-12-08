@@ -15,6 +15,8 @@ declare module "styled-components" {
       greenAccent: string,
       redPrimary: string,
       redSecondary: string,
+      tooltipBackground: string,
+      tooltipFont: string,
     }
   }
 }
