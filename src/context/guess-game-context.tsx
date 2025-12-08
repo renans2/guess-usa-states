@@ -6,6 +6,8 @@ import useGuessedStatesTooltip from "../hooks/useGuessedStatesTooltip";
 import { addEventListenerGuessedAllStates } from "../utils/addEventListeners";
 import type { Tooltip } from "../types/Tooltip";
 import { HIGHLIGHT, HIGHLIGHT_ACCENT } from "../constants/css-classes";
+import useStopwatch from "../hooks/useStopwatch";
+import type { Stopwatch } from "../types/Stopwatch";
 
 const NEW_GUESS_HIGHLIGHT_TIME = 2000;
 
@@ -19,6 +21,7 @@ type GuessGameContextType = {
   unhoverGuessedStateListItem: (state: State) => void;
   alreadyGuessed: boolean;
   tooltipObj: Tooltip;
+  stopwatch: Stopwatch;
 }
 
 const GuessGameContext = createContext<GuessGameContextType | undefined>(undefined);
@@ -30,6 +33,7 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
   const svgRef = useRef<SVGElement>(null);
   const { tooltipObj, registerStateTooltip } = useGuessedStatesTooltip();
   const [alreadyGuessed, setAlreadyGuessed] = useState(false);
+  const { stopwatch, startStopwatch, stopStopwatch } = useStopwatch();
 
   window.addEventListener("beforeunload", (event) => {
     if (0 < guessedStates.length && guessedStates.length < 50) {
@@ -56,6 +60,8 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
       setAlreadyGuessed(true);
       return;
     };
+
+    if (guessedStates.length === 0) startStopwatch();
 
     const statePath = svgRef.current!.querySelector(`#${matchedState.id}`) as HTMLElement;
     setInput("");
@@ -102,9 +108,10 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
   }
 
   useEffect(() => {
-    if (!guessedAllStates()) return;
-    
-    addEventListenerGuessedAllStates(svgRef.current!);
+    if (guessedAllStates()) {
+      addEventListenerGuessedAllStates(svgRef.current!);
+      stopStopwatch();
+    }
   }, [guessedStates]);
   
   return (
@@ -117,7 +124,8 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
       hoverGuessedStateListItem,
       unhoverGuessedStateListItem,
       alreadyGuessed,
-      tooltipObj
+      tooltipObj,
+      stopwatch,
     }}>
       {children}
     </GuessGameContext>

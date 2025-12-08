@@ -12,11 +12,19 @@ export const S_ListContainer = styled(S_Surface)`
   flex: 1;
 `;
 
-export const S_ListHeader = styled.div`
+export const S_ListHeader = styled.div<{
+  $activeStopwatch: boolean;
+}>`
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  & > h2 {
+    color: ${({ theme, $activeStopwatch }) => $activeStopwatch 
+      ? "inherit" 
+      : theme.colors.fontPlaceholder}
+  }
 `;
 
 export const S_List = styled.ul`

@@ -6,6 +6,7 @@ import { S_List, S_ListContainer, S_ListHeader, S_ListItem, S_NoStatesGuessed } 
 export default function List() {
   const listRef = useRef<HTMLUListElement>(null);
   const { 
+    stopwatch: { seconds, minutes },
     guessedStates, 
     newGuessIsHighlighted,
     hoverGuessedStateListItem,
@@ -18,11 +19,16 @@ export default function List() {
   }, [guessedStates]);
 
   const remainingStates = USA_STATES_DATA.length - guessedStates.length;
+  const activeStopwatch = 0 < guessedStates.length && guessedStates.length < 50
 
   return (
     <S_ListContainer>
-      <S_ListHeader>
-        <h2>Guessed states</h2>
+      <S_ListHeader $activeStopwatch={activeStopwatch}>
+        <h2>
+          Time{" "}
+          {String(minutes).padStart(2, "0")}:
+          {String(seconds).padStart(2, "0")}
+        </h2>
         {remainingStates > 0 && (
           <span>{remainingStates} states remaining</span>
         )}
