@@ -19,7 +19,7 @@ export default function List() {
   }, [guessedStates]);
 
   const remainingStates = USA_STATES_DATA.length - guessedStates.length;
-  const activeStopwatch = 0 < guessedStates.length && guessedStates.length < 50
+  const activeStopwatch = 0 < guessedStates.length && guessedStates.length < USA_STATES_DATA.length;
 
   return (
     <S_ListContainer>

@@ -34,6 +34,8 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
   const { tooltipObj, registerStateTooltip } = useGuessedStatesTooltip();
   const [alreadyGuessed, setAlreadyGuessed] = useState(false);
   const { stopwatch, startStopwatch, stopStopwatch } = useStopwatch();
+  const highlightRef = useRef<any>(null);
+  const pathHighlightRef = useRef<any>(null);
 
   function guessedAllStates() {
     return guessedStates.length === USA_STATES_DATA.length;
@@ -70,12 +72,21 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
 
   const highlightNewGuess = (statePath: HTMLElement) => {
     setNewGuessIsHighlighted(true);
-    setTimeout(() => setNewGuessIsHighlighted(false), NEW_GUESS_HIGHLIGHT_TIME);
-
     statePath.classList.add(HIGHLIGHT, HIGHLIGHT_ACCENT);
 
+    if (highlightRef.current)
+      clearTimeout(highlightRef.current);
+    
+    highlightRef.current = setTimeout(() => {
+      setNewGuessIsHighlighted(false);
+      highlightRef.current = null;
+    }, NEW_GUESS_HIGHLIGHT_TIME);
+
     if (guessedStates.length + 1 !== USA_STATES_DATA.length) {
-      setTimeout(() => statePath.classList.remove(HIGHLIGHT_ACCENT), NEW_GUESS_HIGHLIGHT_TIME);
+      pathHighlightRef.current = setTimeout(() => {
+        statePath.classList.remove(HIGHLIGHT_ACCENT);
+        pathHighlightRef.current = null;
+      }, NEW_GUESS_HIGHLIGHT_TIME);
     }
   }
 
@@ -103,6 +114,7 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
 
   useEffect(() => {
     if (guessedAllStates()) {
+      if (pathHighlightRef.current) clearTimeout(pathHighlightRef.current);
       addEventListenerGuessedAllStates(svgRef.current!);
       stopStopwatch();
     }
