@@ -1,4 +1,4 @@
-import { HIGHLIGHT_ACCENT } from "../constants/css-classes";
+import { ALL_GUESSED, HIGHLIGHT_ACCENT } from "../constants/css-classes";
 
 export function addEventListenerGuessedAllStates(mapSvg: SVGElement) {
   const paths = mapSvg.querySelectorAll<HTMLElement>(".state");
@@ -12,7 +12,7 @@ export function addEventListenerGuessedAllStates(mapSvg: SVGElement) {
   }
 
   paths.forEach((path) => {
-    path.classList.add(HIGHLIGHT_ACCENT);
+    path.classList.add(HIGHLIGHT_ACCENT, ALL_GUESSED);
     path.addEventListener("mouseenter", removeHightlightAccentAll);
     path.addEventListener("mouseleave", addHightlightAccentAll);
   });

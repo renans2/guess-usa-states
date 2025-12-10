@@ -5,11 +5,11 @@ import { matchesState } from "../utils/matchesState";
 import useGuessedStatesTooltip from "../hooks/useGuessedStatesTooltip";
 import { addEventListenerGuessedAllStates } from "../utils/addEventListeners";
 import type { Tooltip } from "../types/Tooltip";
-import { HIGHLIGHT, HIGHLIGHT_ACCENT } from "../constants/css-classes";
+import { ALL_GUESSED, HIGHLIGHT, HIGHLIGHT_ACCENT } from "../constants/css-classes";
 import useStopwatch from "../hooks/useStopwatch";
 import type { Stopwatch } from "../types/Stopwatch";
 
-const NEW_GUESS_HIGHLIGHT_TIME = 2000;
+const NEW_GUESS_HIGHLIGHT_TIME = 2100;
 
 type GuessGameContextType = {
   input: string;
@@ -35,7 +35,6 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
   const [alreadyGuessed, setAlreadyGuessed] = useState(false);
   const { stopwatch, startStopwatch, stopStopwatch } = useStopwatch();
   const highlightRef = useRef<any>(null);
-  const pathHighlightRef = useRef<any>(null);
 
   function guessedAllStates() {
     return guessedStates.length === USA_STATES_DATA.length;
@@ -82,12 +81,10 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
       highlightRef.current = null;
     }, NEW_GUESS_HIGHLIGHT_TIME);
 
-    if (guessedStates.length + 1 !== USA_STATES_DATA.length) {
-      pathHighlightRef.current = setTimeout(() => {
+    setTimeout(() => {
+      if (!statePath.classList.contains(ALL_GUESSED))
         statePath.classList.remove(HIGHLIGHT_ACCENT);
-        pathHighlightRef.current = null;
-      }, NEW_GUESS_HIGHLIGHT_TIME);
-    }
+    }, NEW_GUESS_HIGHLIGHT_TIME);
   }
 
   const hoverGuessedStateListItem = (state: State) => {
@@ -114,7 +111,6 @@ export default function GuessGameProvider({ children }: { children: React.ReactN
 
   useEffect(() => {
     if (guessedAllStates()) {
-      if (pathHighlightRef.current) clearTimeout(pathHighlightRef.current);
       addEventListenerGuessedAllStates(svgRef.current!);
       stopStopwatch();
     }
