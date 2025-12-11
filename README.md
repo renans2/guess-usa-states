@@ -1,4 +1,4 @@
-# Guess USA States
+# Guess USA States <img height="32px" src="https://flagemoji.net/img/flags/usa-flag.png"> :round_pushpin:
 
 A "Guess USA States" game built with **Vite**, **React** and **styled-components**.
 
