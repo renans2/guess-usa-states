@@ -1,75 +1,28 @@
-# React + TypeScript + Vite
+# Guess USA States
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A "Guess USA States" game built with **Vite**, **React** and **styled-components**.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Automatic guess detection**: Correct state guesses are recognized instantly—no submit button needed.
+* **Map–list synchronization**: Correctly guessed states are highlighted on both the map and the list for immediate visual feedback.
+* **Map tooltips**: Hovering over a guessed state on the map reveals a tooltip with its name.
+* **Interactive list hovering**: Hovering a state in the list highlights the corresponding state on the map.
+* **State flags display**: Each guessed state appears in the list accompanied by its flag.
+* **Duplicate-guess feedback**: The input field provides instant feedback when you type a state that has already been guessed.
+* **Remaining states counter**: Displays how many states you still need to guess.
+* **Completion timer**: Tracks how long it takes you to guess all states.
 
-## React Compiler
+## Running locally
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+```bash
+# 1. Clone the repository
+git clone https://github.com/renans2/guess-usa-states.git
+cd guess-usa-states
 
-Note: This will impact Vite dev & build performances.
+# 2. Install dependencies
+npm install
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 3. Start the development server
+npm run dev
 ```
